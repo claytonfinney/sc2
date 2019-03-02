@@ -1,7 +1,9 @@
 ### sc2: A Golang client for the StarCraft II Web API
 
 This package is intended for developers wanting to create applications using Blizzard's StarCraft II web API. All currently available endpoints listed on the [Blizzard Developer Documentation](https://develop.battle.net/documentation/api-reference/starcraft-2-community-api).
+
 All payloads are unmarshalled into structs with an almost entirely uniform naming scheme. In most cases, you can expect that field's name is the same as Blizzard's JSON payload, just with a capital first letter. Some legacy endpoints have snake\_case field names in their payloads, which have been converted to CamelCase in their corresponding struct. 
+
 All functions in this package that call Blizzard APIs follow the convention of \<Method\>\<EndpointName\>. The only exception to this convention is that there is an endpoint named `getLeagueData`, which does not have a corresponding function called `GetgetLeagueData`, just `GetLeagueData`.
 
 #### Installation
@@ -10,7 +12,7 @@ All functions in this package that call Blizzard APIs follow the convention of \
 ```
 
 #### Example Usage
-```{go}
+```{golang}
 import sc2
 
 func main() {
