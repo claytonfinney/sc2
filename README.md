@@ -7,12 +7,12 @@ All payloads are unmarshalled into structs with an almost entirely uniform namin
 All functions in this package that call Blizzard APIs follow the convention of \<Method\>\<EndpointName\>. The only exception to this convention is that there is an endpoint named `getLeagueData`, which does not have a corresponding function called `GetgetLeagueData`, just `GetLeagueData`.
 
 #### Installation
-```
+````Go
     go get github.com/claytonfinney/sc2
-```
+````
 
 #### Example Usage
-```{golang}
+````Go
 import sc2
 
 func main() {
@@ -39,4 +39,4 @@ func main() {
     
 }
 
-```
+````
