@@ -6,7 +6,7 @@ import (
 
 type Static struct {
 	Achievements []Achievement `json:"achievements"`
-	Criteria     []Criterion   `json:"criteria"`
+	Criteria     []Criteria    `json:"criteria"`
 	Categories   []Category    `json:"categories"`
 	Rewards      []Reward      `json:"rewards"`
 }
@@ -191,10 +191,10 @@ func (c *Client) GetMetadata(region int, realm int, profile int) (*Metadata, err
 	return m, nil
 }
 
-func (c *Client) GetProfile(region int, realm int, profile int) *Profile {
+func (c *Client) GetProfile(region int, realm int, profile int) (*Profile, error) {
 	uri := fmt.Sprintf("%s/sc2/profile/%s/%s/%s", c.BaseUrl, region, realm, profile)
-	p := Profile{}
-	err := c.Get(uri, &p)
+	p := &Profile{}
+	err := c.Get(uri, p)
 	if err != nil {
 		return nil, err
 	}

@@ -224,10 +224,10 @@ type LegacyMatches struct {
 	} `json:"matches"`
 }
 
-func (c *Client) GetLegacyProfile(region int, realm int, profile int) {
+func (c *Client) GetLegacyProfile(region int, realm int, profile int) (*LegacyProfile, error) {
 	uri := fmt.Sprintf("%s/sc2/legacy/profile/%s/%s/%s", c.BaseUrl, region, realm, profile)
-	p := LegacyProfile{}
-	err := c.Get(uri, &p)
+	p := &LegacyProfile{}
+	err := c.Get(uri, p)
 	if err != nil {
 		return nil, err
 	}
@@ -279,7 +279,7 @@ func (c *Client) GetLegacyLadder(region int, id int) (*LegacyLadder, error) {
 	return l, err
 }
 
-func (c *Client) GetLegacyRewards(region) (*LegacyRewards, error) {
+func (c *Client) GetLegacyRewards(region int) (*LegacyRewards, error) {
 	uri := fmt.Sprintf("%s/sc2/legacy/data/rewards/%s", c.BaseUrl, region)
 	r := &LegacyRewards{}
 	err := c.Get(uri, r)
