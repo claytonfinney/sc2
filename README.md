@@ -8,12 +8,14 @@ All functions in this package that call Blizzard APIs follow the convention of \
 
 #### Installation
 ````Go
-    go get github.com/claytonfinney/sc2
+go get github.com/claytonfinney/sc2
 ````
 
 #### Example Usage
 ````Go
-import sc2
+import (
+    "sc2"
+)
 
 func main() {
     c := "YOUR-CLIENT-ID"
