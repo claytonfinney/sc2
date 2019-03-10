@@ -68,7 +68,7 @@ type Season struct {
 }
 
 func (c *Client) GetLadderSummary(region int, realm int, profile int) (*LadderSummary, error) {
-	uri := fmt.Sprintf("%s/sc2/profile/%s/%s/%s/ladder/summary", c.BaseUrl, region, realm, profile)
+	uri := fmt.Sprintf("%s/sc2/profile/%v/%v/%v/ladder/summary", c.BaseUrl, region, realm, profile)
 	l := &LadderSummary{}
 	err := c.Get(uri, l)
 	if err != nil {
@@ -79,7 +79,7 @@ func (c *Client) GetLadderSummary(region int, realm int, profile int) (*LadderSu
 }
 
 func (c *Client) GetLadder(region int, realm int, profile int, ladder int) (*Ladder, error) {
-	uri := fmt.Sprintf("%s/sc2/profile/%s/%s/%s/ladder/summary", c.BaseUrl, region, realm, profile, ladder)
+	uri := fmt.Sprintf("%s/sc2/profile/%v/%v/%v/ladder/%v", c.BaseUrl, region, realm, profile, ladder)
 	l := &Ladder{}
 	err := c.Get(uri, l)
 	if err != nil {
@@ -90,7 +90,7 @@ func (c *Client) GetLadder(region int, realm int, profile int, ladder int) (*Lad
 }
 
 func (c *Client) GetGrandmaster(region int) (*Ladder, error) {
-	uri := fmt.Sprintf("%s/sc2/ladder/grandmaster/%s", c.BaseUrl, region)
+	uri := fmt.Sprintf("%s/sc2/ladder/grandmaster/%v", c.BaseUrl, region)
 	l := &Ladder{}
 	err := c.Get(uri, l)
 	if err != nil {
@@ -101,7 +101,7 @@ func (c *Client) GetGrandmaster(region int) (*Ladder, error) {
 }
 
 func (c *Client) GetSeason(region int) (*Season, error) {
-	uri := fmt.Sprintf("%s/sc2/static/profile/%s", c.BaseUrl, region)
+	uri := fmt.Sprintf("%s/sc2/ladder/season/%v", c.BaseUrl, region)
 	s := &Season{}
 	err := c.Get(uri, s)
 	if err != nil {

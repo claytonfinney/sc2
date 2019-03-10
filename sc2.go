@@ -3,6 +3,7 @@ package sc2
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 )
@@ -22,7 +23,7 @@ type Client struct {
 }
 
 func NewClient(region string, client string, secret string) *Client {
-	url := fmt.Sprintf("https://%s.battle.net/ouath/token&grant_type=client_credentials", region)
+	url := fmt.Sprintf("https://%s.battle.net/oauth/token?grant_type=client_credentials", region)
 	h := &http.Client{}
 	req, err := http.NewRequest("POST", url, nil)
 	if err != nil {
@@ -34,9 +35,13 @@ func NewClient(region string, client string, secret string) *Client {
 		log.Fatal(err)
 	}
 	a := AuthToken{}
-	j := json.NewDecoder(resp.Body)
-	err = j.Decode(&a)
+	i, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
+		log.Fatal(err)
+	}
+	err = json.Unmarshal(i, &a)
+	if err != nil {
+		log.Println(string(i))
 		log.Fatal(err)
 	}
 
@@ -54,33 +59,18 @@ func (c *Client) Get(uri string, payload interface{}) error {
 	if err != nil {
 		return err
 	}
-	j := json.NewDecoder(resp.Body)
-	err = j.Decode(payload)
+	i, err := ioutil.ReadAll(resp.Body)
+	log.Println(string(i))
+	if err != nil {
+		log.Fatal(err)
+	}
+	err = json.Unmarshal(i, &payload)
+	if err != nil {
+		log.Println(string(i))
+		log.Fatal(err)
+	}
 	if err != nil {
 		return err
 	}
 	return nil
-}
-
-func main() {
-	c := "YOUR-CLIENT-ID"
-	s := "YOUR-SECRET-ID"
-	client := NewClient("us", c, s)
-
-	szn, err := client.GetSeason(1)
-	if err != nil {
-		log.Fatal(err)
-	}
-	curr := szn.SeasonId // corresponding Blizzard JSON field is seasonId
-	// seasonId, queueId = 201 for LotV, teamType = 0 for 1v1, leagueId = 6 for Grandmaster)
-	d, err := client.GetLeagueData(curr, 201, 0, 6)
-	if err != nil {
-		log.Fatal(err)
-	}
-	id := d.Tier[0].Division.Id
-	grandmasters, err := client.GetLegacyLadder(1, id) // Currently the way to fetch ladder data without a unique player ID, may change soon
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println(grandmasters.Team[0].Member[0].LegacyLink.Name) // Gets the first place Grandmaster!
 }

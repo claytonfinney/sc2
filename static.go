@@ -170,7 +170,7 @@ type Profile struct {
 }
 
 func (c *Client) GetStatic(region int) (*Static, error) {
-	uri := fmt.Sprintf("%s/sc2/static/profile/%s", c.BaseUrl, region)
+	uri := fmt.Sprintf("%s/sc2/static/profile/%v", c.BaseUrl, region)
 	s := &Static{}
 	err := c.Get(uri, &s)
 	if err != nil {
@@ -181,7 +181,7 @@ func (c *Client) GetStatic(region int) (*Static, error) {
 }
 
 func (c *Client) GetMetadata(region int, realm int, profile int) (*Metadata, error) {
-	uri := fmt.Sprintf("%s/sc2/metadata/profile/%s/%s/%s", c.BaseUrl, region, realm, profile)
+	uri := fmt.Sprintf("%s/sc2/metadata/profile/%v/%v/%v", c.BaseUrl, region, realm, profile)
 	m := &Metadata{}
 	err := c.Get(uri, m)
 	if err != nil {
@@ -192,7 +192,7 @@ func (c *Client) GetMetadata(region int, realm int, profile int) (*Metadata, err
 }
 
 func (c *Client) GetProfile(region int, realm int, profile int) (*Profile, error) {
-	uri := fmt.Sprintf("%s/sc2/profile/%s/%s/%s", c.BaseUrl, region, realm, profile)
+	uri := fmt.Sprintf("%s/sc2/profile/%v/%v/%v", c.BaseUrl, region, realm, profile)
 	p := &Profile{}
 	err := c.Get(uri, p)
 	if err != nil {

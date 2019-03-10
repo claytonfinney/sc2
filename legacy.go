@@ -136,6 +136,27 @@ type LegacyLadders struct {
 }
 
 type LegacyLadder struct {
+	LadderMembers []struct {
+		Character struct {
+			Id          string `json:"id"`
+			Realm       int    `json:"realm"`
+			Region      int    `json:"region"`
+			DisplayName string `json:"displayName"`
+			ClanName    string `json:"clanName"`
+			ClanTag     string `json:"clanTag"`
+			ProfilePath string `json:"profilePath"`
+		} `json:"character"`
+		JoinTimestamp  int    `json:"joinTimestamp"`
+		Points         int    `json:"points"`
+		Wins           int    `json:"wins"`
+		Losses         int    `json:"losses"`
+		HighestRank    int    `json:"highestRank"`
+		PreviousRank   int    `json:"previousRank"`
+		FavoriteRaceP1 string `json:"favoriteRaceP1"`
+	} `json:"ladderMembers"`
+}
+
+type MaybeLegacyLadder struct {
 	Links struct {
 		Self struct {
 			Href string `json:"href"`
@@ -225,7 +246,7 @@ type LegacyMatches struct {
 }
 
 func (c *Client) GetLegacyProfile(region int, realm int, profile int) (*LegacyProfile, error) {
-	uri := fmt.Sprintf("%s/sc2/legacy/profile/%s/%s/%s", c.BaseUrl, region, realm, profile)
+	uri := fmt.Sprintf("%s/sc2/legacy/profile/%v/%v/%v", c.BaseUrl, region, realm, profile)
 	p := &LegacyProfile{}
 	err := c.Get(uri, p)
 	if err != nil {
@@ -236,7 +257,7 @@ func (c *Client) GetLegacyProfile(region int, realm int, profile int) (*LegacyPr
 }
 
 func (c *Client) GetLegacyLadders(region int, realm int, profile int) (*LegacyLadders, error) {
-	uri := fmt.Sprintf("%s/sc2/legacy/%s/%s/%s/ladders", c.BaseUrl, region, realm, profile)
+	uri := fmt.Sprintf("%s/sc2/legacy/%v/%v/%v/ladders", c.BaseUrl, region, realm, profile)
 	l := &LegacyLadders{}
 	err := c.Get(uri, l)
 	if err != nil {
@@ -247,7 +268,7 @@ func (c *Client) GetLegacyLadders(region int, realm int, profile int) (*LegacyLa
 }
 
 func (c *Client) GetLegacyMatches(region int, realm int, profile int) (*LegacyMatches, error) {
-	uri := fmt.Sprintf("%s/sc2/legacy/%s/%s/%s/matches", c.BaseUrl, region, realm, profile)
+	uri := fmt.Sprintf("%s/sc2/legacy/%v/%v/%v/matches", c.BaseUrl, region, realm, profile)
 	m := &LegacyMatches{}
 	err := c.Get(uri, m)
 	if err != nil {
@@ -258,7 +279,7 @@ func (c *Client) GetLegacyMatches(region int, realm int, profile int) (*LegacyMa
 }
 
 func (c *Client) GetLegacyAchievements(region int) (*LegacyAchievements, error) {
-	uri := fmt.Sprintf("%s/sc2/legacy/data/achievements/%s", c.BaseUrl, region)
+	uri := fmt.Sprintf("%s/sc2/legacy/data/achievements/%v", c.BaseUrl, region)
 	a := &LegacyAchievements{}
 	err := c.Get(uri, a)
 	if err != nil {
@@ -269,7 +290,7 @@ func (c *Client) GetLegacyAchievements(region int) (*LegacyAchievements, error) 
 }
 
 func (c *Client) GetLegacyLadder(region int, id int) (*LegacyLadder, error) {
-	uri := fmt.Sprintf("%s/sc2/legacy/ladder/%s/%s", c.BaseUrl, region, id)
+	uri := fmt.Sprintf("%s/sc2/legacy/ladder/%v/%v", c.BaseUrl, region, id)
 	l := &LegacyLadder{}
 	err := c.Get(uri, l)
 	if err != nil {
@@ -280,7 +301,7 @@ func (c *Client) GetLegacyLadder(region int, id int) (*LegacyLadder, error) {
 }
 
 func (c *Client) GetLegacyRewards(region int) (*LegacyRewards, error) {
-	uri := fmt.Sprintf("%s/sc2/legacy/data/rewards/%s", c.BaseUrl, region)
+	uri := fmt.Sprintf("%s/sc2/legacy/data/rewards/%v", c.BaseUrl, region)
 	r := &LegacyRewards{}
 	err := c.Get(uri, r)
 	if err != nil {
