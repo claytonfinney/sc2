@@ -156,61 +156,6 @@ type LegacyLadder struct {
 	} `json:"ladderMembers"`
 }
 
-type MaybeLegacyLadder struct {
-	Links struct {
-		Self struct {
-			Href string `json:"href"`
-		} `json:"self"`
-	} `json:"_links"`
-
-	League struct {
-		LeagueKey struct {
-			LeagueId int `json:"league_id"`
-			SeasonId int `json:"season_id"`
-			QueueId  int `json:"queue_id"`
-			TeamType int `json:"team_type"`
-		} `json:"league_key"`
-		Key struct {
-			Href string `json:"href"`
-		} `json:"key"`
-	} `json:"league"`
-
-	Team []struct {
-		Id                  int `json:"id"`
-		Rating              int `json:"rating"`
-		Wins                int `json:"wins"`
-		Losses              int `json:"losses"`
-		Ties                int `json:"ties"`
-		Points              int `json:"points"`
-		LongestWinStreak    int `json:"longest_win_streak"`
-		CurrentWinStreak    int `json:"current_win_streak"`
-		CurrentRank         int `json:"current_rank"`
-		HighestRank         int `json:"highest_rank"`
-		PreviousRank        int `json:"previous_rank"`
-		JoinTimeStamp       int `json:"join_time_stamp"`
-		LastPlayedTimeStamp int `json:"last_played_time_stamp"`
-		Member              []struct {
-			LegacyLink struct {
-				Id    int    `json:"id"`
-				Realm int    `json:"realm"`
-				Name  string `json:"name"`
-				Path  string `json:"path"`
-			} `json:"legacy_link"`
-			PlayedRaceCount []struct {
-				Race map[string]string `json:"race"`
-			} `json:"played_race_count"`
-			Count         int `json:"count"`
-			CharacterLink struct {
-				Id        int    `json:"id"`
-				BattleTag string `json:"battle_tag"`
-				Key       struct {
-					Href string `json:"href"`
-				} `json:"character_link"`
-			}
-		} `json:"member"`
-	} `json:"team"`
-}
-
 type LegacySeason struct {
 	Ladder []struct {
 		LadderName       string `json:"ladderName"`

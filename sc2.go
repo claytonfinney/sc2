@@ -41,7 +41,6 @@ func NewClient(region string, client string, secret string) *Client {
 	}
 	err = json.Unmarshal(i, &a)
 	if err != nil {
-		log.Println(string(i))
 		log.Fatal(err)
 	}
 
@@ -60,13 +59,11 @@ func (c *Client) Get(uri string, payload interface{}) error {
 		return err
 	}
 	i, err := ioutil.ReadAll(resp.Body)
-	log.Println(string(i))
 	if err != nil {
 		log.Fatal(err)
 	}
 	err = json.Unmarshal(i, &payload)
 	if err != nil {
-		log.Println(string(i))
 		log.Fatal(err)
 	}
 	if err != nil {
