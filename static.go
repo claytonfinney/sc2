@@ -4,14 +4,16 @@ import (
 	"fmt"
 )
 
+// Target struct for the Static resource:
+// /sc2/static/profile/:regionId
 type Static struct {
-	Achievements []Achievement `json:"achievements"`
-	Criteria     []Criteria    `json:"criteria"`
-	Categories   []Category    `json:"categories"`
-	Rewards      []Reward      `json:"rewards"`
+	Achievements []StaticAchievement `json:"achievements"`
+	Criteria     []StaticCriteria    `json:"criteria"`
+	Categories   []StaticCategory    `json:"categories"`
+	Rewards      []StaticReward      `json:"rewards"`
 }
 
-type Achievement struct {
+type StaticAchievement struct {
 	CategoryId          string   `json:"categoryId"`
 	ChainAchievementIds []string `json:"chainAchievementIds"`
 	ChainRewardSize     int      `json:"chainRewardSize"`
@@ -26,7 +28,7 @@ type Achievement struct {
 	UiOrderHint         int      `json:"uiOrderHint"`
 }
 
-type Criteria struct {
+type StaticCriteria struct {
 	AchievementId     string `json:"achievementId"`
 	Description       string `json:"description"`
 	EvaluationClass   string `json:"evaluationClass"`
@@ -36,7 +38,7 @@ type Criteria struct {
 	UiOrderHint       int    `json:"uiOrderHint"`
 }
 
-type Category struct {
+type StaticCategory struct {
 	ChildrenCategoryIds   []string `json:"childrenCategoryIds"`
 	FeaturedAchievementId string   `json:"featuredAchievementId"`
 	Id                    string   `json:"id"`
@@ -46,7 +48,7 @@ type Category struct {
 	UiOrderHint           int      `json:"uiOrderHint"`
 }
 
-type Reward struct {
+type StaticReward struct {
 	Flags          int    `json:"flags"`
 	Id             string `json:"id"`
 	AchievementId  string `json:"achievementId"`
@@ -57,6 +59,8 @@ type Reward struct {
 	UiOrderHint    int    `json:"uiOrderHint"`
 }
 
+// Target struct for the Metadata resource:
+// /sc2/metadata/profile/:regionId/:realmId/:profileId
 type Metadata struct {
 	Name       string `json:"name"`
 	ProfileUrl string `json:"profileUrl"`
@@ -66,107 +70,94 @@ type Metadata struct {
 	RealmId    int    `json:"realmId"`
 }
 
+// Target struct for the Profile resource:
+// /sc2/profile/:regionId/:realmId/:profileId
 type Profile struct {
-	Summary struct {
-		Id                     string `json:"id"`
-		Realm                  int    `json:"realm"`
-		DisplayName            string `json:"displayName"`
-		Portrait               string `json:"portrait"`
-		DecalTerran            string `json:"decalTerran"`
-		DecalZerg              string `json:"decalZerg"`
-		DecalProtoss           string `json"decalProtoss"`
-		TotalSwarmLevel        int    `json:"totalSwarmLevel"`
-		TotalAchievementPoints int    `json:"totalAchievementPoints"`
-	} `json:"summary"`
+	Summary               ProfileSummary                 `json:"summary"`
+	Snapshot              ProfileSnapshot                `json:"snapshot"`
+	Career                ProfileCareer                  `json:"career"`
+	SwarmLevels           ProfileSwarmLevels             `json:"swarmLevels"`
+	CategoryPointProgress []ProfileCategoryPointProgress `json:"categoryPointProgress"`
+	EarnedAchievements    []ProfileEarnedAchievement     `json:"earnedAchievements"`
+}
 
-	Snapshot struct {
-		SeasonSnapshot struct {
-			Solo struct {
-				Rank       int    `json:"rank"`
-				LeagueName string `json:"leagueName"`
-				TotalGames int    `json:"totalGames"`
-				TotalWins  int    `json:"totalWins"`
-			} `json:"1v1"`
+type ProfileSummary struct {
+	Id                     string `json:"id"`
+	Realm                  int    `json:"realm"`
+	DisplayName            string `json:"displayName"`
+	Portrait               string `json:"portrait"`
+	DecalTerran            string `json:"decalTerran"`
+	DecalZerg              string `json:"decalZerg"`
+	DecalProtoss           string `json"decalProtoss"`
+	TotalSwarmLevel        int    `json:"totalSwarmLevel"`
+	TotalAchievementPoints int    `json:"totalAchievementPoints"`
+}
 
-			Twos struct {
-				Rank       int    `json:"rank"`
-				LeagueName string `json:"leagueName"`
-				TotalGames int    `json:"totalGames"`
-				TotalWins  int    `json:"totalWins"`
-			} `json:"2v2"`
+type ProfileSnapshot struct {
+	SeasonSnapshot ProfileSeasonSnapshot `json:"seasonSnapshot"`
+}
 
-			Threes struct {
-				Rank       int    `json:"rank"`
-				LeagueName string `json:"leagueName"`
-				TotalGames int    `json:"totalGames"`
-				TotalWins  int    `json:"totalWins"`
-			} `json:"3v3"`
+type ProfileSeasonSnapshot struct {
+	Solo   ProfileSeasonSnapshotLadder `json:"1v1"`
+	Twos   ProfileSeasonSnapshotLadder `json:"2v2"`
+	Threes ProfileSeasonSnapshotLadder `json:"3v3"`
+	Fours  ProfileSeasonSnapshotLadder `json:"4v4"`
+}
 
-			Fours struct {
-				Rank       int    `json:"rank"`
-				LeagueName string `json:"leagueName"`
-				TotalGames int    `json:"totalGames"`
-				TotalWins  int    `json:"totalWins"`
-			} `json:"4v4"`
-		}
-	} `json:"snapshot"`
+type ProfileSeasonSnapshotLadder struct {
+	Rank       int    `json:"rank"`
+	LeagueName string `json:"leagueName"`
+	TotalGames int    `json:"totalGames"`
+	TotalWins  int    `json:"totalWins"`
+}
 
-	Career struct {
-		TerranWins                int    `json:"terranWins"`
-		ZergWins                  int    `json:"zergWins"`
-		ProtossWins               int    `json:"protossWins"`
-		TotalCareerGames          int    `json:"totalCareerGames"`
-		TotalGamesThisSeason      int    `json:"totalGamesThisSeason"`
-		Current1v1LeagueName      string `json:"current1v1LeagueName"`
-		CurrentBestTeamLeagueName string `json:"currentBestTeamLeagueName"`
-		Best1v1Finish             struct {
-			LeagueName    string `json:"leagueName"`
-			TimesAchieved int    `json:"timesAchieved"`
-		} `json:"best1v1Finish"`
-		BestTeamFInish struct {
-			LeagueName    string `json:"leagueName"`
-			TimesAchieved int    `json:"timesAchieved"`
-		} `json:"bestTeamFinish"`
-	} `json:"career"`
+type ProfileCareer struct {
+	TerranWins                int                 `json:"terranWins"`
+	ZergWins                  int                 `json:"zergWins"`
+	ProtossWins               int                 `json:"protossWins"`
+	TotalCareerGames          int                 `json:"totalCareerGames"`
+	TotalGamesThisSeason      int                 `json:"totalGamesThisSeason"`
+	Current1v1LeagueName      string              `json:"current1v1LeagueName"`
+	CurrentBestTeamLeagueName string              `json:"currentBestTeamLeagueName"`
+	Best1v1Finish             ProfileBestFinished `json:"best1v1Finish"`
+	BestTeamFinish            ProfileBestFinished `json:"bestTeamFinish"`
+}
 
-	SwarmLevels struct {
-		Level  int `json:"level"`
-		Terran struct {
-			Level              int `json:"level"`
-			MaxLevelPoints     int `json:"maxLevelPoints"`
-			CurrentLevelPoints int `json:"currentLevelPoints"`
-		} `json:"terran"`
-		Zerg struct {
-			Level              int `json:"level"`
-			MaxLevelPoints     int `json:"maxLevelPoints"`
-			CurrentLevelPoints int `json:"currentLevelPoints"`
-		} `json:"zerg"`
-		Protoss struct {
-			Level              int `json:"level"`
-			MaxLevelPoints     int `json:"maxLevelPoints"`
-			CurrentLevelPoints int `json:"currentLevelPoints"`
-		} `json:"protoss"`
-	} `json:"swarmLevels"`
+type ProfileBestFinished struct {
+	LeagueName    string `json:"leagueName"`
+	TimesAchieved int    `json:"timesAchieved"`
+}
 
-	Campaign struct {
-	} `json:"campaign"`
+type ProfileSwarmLevels struct {
+	Level   int                   `json:"level"`
+	Terran  ProfileSwarmLevelRace `json:"terran"`
+	Zerg    ProfileSwarmLevelRace `json:"zerg"`
+	Protoss ProfileSwarmLevelRace `json:"protoss"`
+}
 
-	CategoryPointProgress []struct {
-		RewardId      string `json:"rewardId"`
-		AchievementId string `json:"achievementId"`
-		Selected      bool   `json:"selected"`
-	} `json:"categoryPointProgress"`
+type ProfileSwarmLevelRace struct {
+	Level              int `json:"level"`
+	MaxLevelPoints     int `json:"maxLevelPoints"`
+	CurrentLevelPoints int `json:"currentLevelPoints"`
+}
 
-	EarnedAchievements []struct {
-		AchievementId                    string `json:"achievementId"`
-		CompletionDate                   int    `json:"completionDate"`
-		NumCompletedAchievementsInSeries int    `json:"numCompletedAchievementsInSeries"`
-		IsComplete                       bool   `json:"isComplete"`
-		InProgress                       bool   `json:"inProgress"`
-		Criteria                         []struct {
-			CriterionId string `json:"criterionId"`
-		} `json:"criteria"`
-	}
+type ProfileCategoryPointProgress struct {
+	RewardId      string `json:"rewardId"`
+	AchievementId string `json:"achievementId"`
+	Selected      bool   `json:"selected"`
+}
+
+type ProfileEarnedAchievement struct {
+	AchievementId                    string                             `json:"achievementId"`
+	CompletionDate                   float64                            `json:"completionDate"`
+	NumCompletedAchievementsInSeries int                                `json:"numCompletedAchievementsInSeries"`
+	IsComplete                       bool                               `json:"isComplete"`
+	InProgress                       bool                               `json:"inProgress"`
+	Criteria                         []ProfileEarnedAchievementCriteria `json:"criteria"`
+}
+
+type ProfileEarnedAchievementCriteria struct {
+	CriterionId string `json:"criterionId"`
 }
 
 func (c *Client) GetStatic(region int) (*Static, error) {

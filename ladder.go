@@ -4,61 +4,69 @@ import (
 	"fmt"
 )
 
+// Target struct for Ladder Summary resource:
+// /sc2/profile/:regionId/:realmId/:profileId/ladder/summary
 type LadderSummary struct {
-	ShowCaseEntries []struct {
-		LadderId string `json:"ladderId"`
-		Team     struct {
-			LocalizedGameMode string `json:"localizedGameMode"`
-			Members           []struct {
-				FavoriteRace string `json:favoriteRace"`
-				Name         string `json:"name"`
-				PlayerId     string `json:"playerId"`
-				Region       int    `json:"region"`
-			} `json:"members"`
-		} `json:"team"`
-		LeagueName            string `json:"leagueName"`
-		LocalizedDivisionName string `json:"localizedDivisionName"`
-		Rank                  int    `json:"rank"`
-		Wins                  int    `json:"wins"`
-		Losses                int    `json:"losses"`
-	} `json:"showCaseEntries"`
-
-	PlacementMatches struct {
-		LocalizedGameMode string `json:"localizedGameMode"`
-		Members           []struct {
-			FavoriteRace string `json:favoriteRace"`
-			Name         string `json:"name"`
-			PlayerId     string `json:"playerId"`
-			Region       int    `json:"region"`
-		} `json:"members"`
-		GamesRemaining int `json:"gamesRemaining"`
-	} `json:"placementMatches"`
-
-	AllLadderMemberships struct {
-		LadderId          string `json:"ladderId"`
-		LocalizedGameMode string `json:"localizedGameMode"`
-		Rank              int    `json:"rank"`
-	} `json:"allLadderMemberships"`
+	ShowCaseEntries      []LadderSummaryShowCaseEntry    `json:"showCaseEntries"`
+	PlacementMatches     []LadderSummaryPlacementMatches `json:"placementMatches"`
+	AllLadderMemberships []LadderSummaryAllMemberships   `json:"allLadderMemberships"`
 }
 
+type LadderSummaryShowCaseEntry struct {
+	LadderId              string            `json:"ladderId"`
+	Team                  LadderSummaryTeam `json:"team"`
+	LeagueName            string            `json:"leagueName"`
+	LocalizedDivisionName string            `json:"localizedDivisionName"`
+	Rank                  int               `json:"rank"`
+	Wins                  int               `json:"wins"`
+	Losses                int               `json:"losses"`
+}
+
+type LadderSummaryTeam struct {
+	LocalizedGameMode string                    `json:"localizedGameMode"`
+	Members           []LadderSummaryTeamMember `json:"memebrs"`
+}
+
+type LadderSummaryTeamMember struct {
+	FavoriteRace string `json:favoriteRace"`
+	Name         string `json:"name"`
+	PlayerId     string `json:"playerId"`
+	Region       int    `json:"region"`
+}
+
+type LadderSummaryPlacementMatches struct {
+	LocalizedGameMode string                    `json:"localizedGameMode"`
+	Members           []LadderSummaryTeamMember `json:"members"`
+	GamesRemaining    int                       `json:"gamesRemaining"`
+}
+
+type LadderSummaryAllMemberships struct {
+	LadderId          string `json:"ladderId"`
+	LocalizedGameMode string `json:"localizedGameMode"`
+	Rank              int    `json:"rank"`
+}
+
+// Target struct for Ladder resource:
+// /sc2/profile/:regionId/:realmId/:profileId/ladder/:ladderId"
 type Ladder struct {
-	LadderTeams []struct {
-		TeamMembers []struct {
-			Id           string `json:"id"`
-			Realm        int    `json:"realm"`
-			Region       int    `json:"region"`
-			DisplayName  string `json:"displayName"`
-			FavoriteRace string `json:"favoriteRace"`
-		}
-		PreviousRank  int `json:"previousRank"`
-		Points        int `json:"points"`
-		Wins          int `json:"wins"`
-		Losses        int `json:"losses"`
-		Mmr           int `json:"mmr"`
-		JoinTimestamp int `json:"joinTimestamp"`
-	} `json:"ladderTeams"`
+	LadderTeams []LadderTeam `json:"ladderTeams"`
 }
 
+type LadderTeam struct {
+	TeamMembers []LadderTeamMember `json:"teamMembers"`
+}
+
+type LadderTeamMember struct {
+	Id           string `json:"id"`
+	Realm        int    `json:"realm"`
+	Region       int    `json:"region"`
+	DisplayName  string `json:"displayName"`
+	ClanTag      string `json:"clanTag"`
+	FavoriteRace string `json:"favoriteRace"`
+}
+
+// Target struct for Season resource:
+// /sc2/ladder/season/:regionId
 type Season struct {
 	SeasonId  int    `json:"seasonId"`
 	Number    int    `json:"number"`

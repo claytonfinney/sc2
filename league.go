@@ -4,28 +4,38 @@ import (
 	"fmt"
 )
 
+// Target struct for the LeagueData resource:
+// /data/sc2/league/:seasonId/:queueId/:teamId/:leagueId
 type LeagueData struct {
-	Links struct {
-		Self struct {
-			Href string `json:"href"`
-		} `json:"self"`
-	} `json:"links"`
+	Links LeagueDataLinks  `json:"links"`
+	Key   LeagueDataKey    `json:"key"`
+	Tier  []LeagueDataTier `json:"tier"`
+}
 
-	Key struct {
-		LeagueId int `json:"league_id"`
-		SeasonId int `json:"season_id"`
-		QueueId  int `json:"queue_id"`
-		TeamType int `json:"team_type"`
-	} `json:"key"`
+type LeagueDataLinks struct {
+	Self LeagueDataSelf `json:"self"`
+}
 
-	Tier []struct {
-		Id       int `json:"id"`
-		Division []struct {
-			Id          int `json:"id"`
-			LadderId    int `json:"ladder_id"`
-			MemberCount int `json:"member_count"`
-		} `json:"division"`
-	} `json:"tier"`
+type LeagueDataSelf struct {
+	Href string `json:"href"`
+}
+
+type LeagueDataTier struct {
+	Id       int                  `json:"id"`
+	Division []LeagueDataDivision `json:"division"`
+}
+
+type LeagueDataDivision struct {
+	Id          int `json:"id"`
+	LadderId    int `json:"ladder_id"`
+	MemberCount int `json:"member_count"`
+}
+
+type LeagueDataKey struct {
+	LeagueId int `json:"league_id"`
+	SeasonId int `json:"season_id"`
+	QueueId  int `json:"queue_id"`
+	TeamType int `json:"team_type"`
 }
 
 func (c *Client) GetLeagueData(season int, queue int, team int, league int) (*LeagueData, error) {
