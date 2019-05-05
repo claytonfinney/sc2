@@ -21,6 +21,7 @@ func TestGetLadderSummary(t *testing.T) {
 		t.Fatal(err)
 	}
 	if !byteSlicesMatch(summ_b, fixture) {
+		writeTestDebugOutput(summ_b, fixture, "test_get_ladder_summary")
 		t.Error("Fields for target struct LadderSummary does not match the provided fixture")
 	}
 }
@@ -41,13 +42,14 @@ func TestGetLadder(t *testing.T) {
 		t.Fatal(err)
 	}
 	if !byteSlicesMatch(ladd_b, fixture) {
+		writeTestDebugOutput(ladd_b, fixture, "test_get_ladder")
 		t.Error("Fields for target struct Ladder does not match the provided fixture")
 	}
 }
 
 // Bit of a rehash of TestGetLadder, maybe do a test to support the length being > 100 or something?
 func TestGetGrandmaster(t *testing.T) {
-	filepath := "test_fixtures/ladder_summary_test_payload.json"
+	filepath := "test_fixtures/ladder_test_payload.json"
 	fixture := getBodyFromFile(filepath)
 	client, server := getTestClient(200, fixture)
 	defer server.Close()
@@ -62,15 +64,13 @@ func TestGetGrandmaster(t *testing.T) {
 		t.Fatal(err)
 	}
 	if !byteSlicesMatch(ladd_b, fixture) {
+		writeTestDebugOutput(ladd_b, fixture, "test_get_grandmaster")
 		t.Error("Fields for target struct Ladder does not match the provided fixture")
-	}
-	if len(ladd.LadderTeams) != 200 {
-		t.Error("Length of the Ladder.TeamMembers slice in target Ladder struct did not match desired 200")
 	}
 }
 
 func TestGetSeason(t *testing.T) {
-	filepath := "test_fixtures/ladder_summary_test_payload.json"
+	filepath := "test_fixtures/season_test_payload.json"
 	fixture := getBodyFromFile(filepath)
 	client, server := getTestClient(200, fixture)
 	defer server.Close()
@@ -85,9 +85,10 @@ func TestGetSeason(t *testing.T) {
 		t.Fatal(err)
 	}
 	if !byteSlicesMatch(seas_b, fixture) {
+		writeTestDebugOutput(seas_b, fixture, "test_get_season")
 		t.Error("Fields for target struct Season does not match the provided fixture")
 	}
-	if seas.SeasonId != 37 {
+	if seas.SeasonId != 39 {
 		t.Error("Season.SeasonId field did not match desired 37")
 	}
 }

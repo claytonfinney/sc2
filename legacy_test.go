@@ -21,6 +21,7 @@ func TestGetLegacyProfile(t *testing.T) {
 		t.Fatal(err)
 	}
 	if !byteSlicesMatch(prof_b, fixture) {
+		writeTestDebugOutput(prof_b, fixture, "test_get_legacy_profile")
 		t.Error("Fields for target struct LegacyProfile does not match the provided fixture")
 	}
 }
@@ -41,6 +42,7 @@ func TestGetLegacyLadders(t *testing.T) {
 		t.Fatal(err)
 	}
 	if !byteSlicesMatch(ladd_b, fixture) {
+		writeTestDebugOutput(ladd_b, fixture, "test_get_legacy_ladders")
 		t.Error("Fields for target struct LegacyLadders does not match the provided fixture")
 	}
 }
@@ -61,6 +63,7 @@ func TestGetLegacyMatches(t *testing.T) {
 		t.Fatal(err)
 	}
 	if !byteSlicesMatch(match_b, fixture) {
+		writeTestDebugOutput(match_b, fixture, "test_get_legacy_matches")
 		t.Error("Fields for target struct LegacyMatches does not match the provided fixture")
 	}
 }
@@ -81,6 +84,7 @@ func TestGetLegacyAchievements(t *testing.T) {
 		t.Fatal(err)
 	}
 	if !byteSlicesMatch(achi_b, fixture) {
+		writeTestDebugOutput(achi_b, fixture, "test_get_legacy_achievements")
 		t.Error("Fields for target struct LegacyAchievements does not match the provided fixture")
 	}
 }
@@ -101,6 +105,7 @@ func TestGetLegacyLadder(t *testing.T) {
 		t.Fatal(err)
 	}
 	if !byteSlicesMatch(ladd_b, fixture) {
+		writeTestDebugOutput(ladd_b, fixture, "test_get_legacy_ladder")
 		t.Error("Fields for target struct LegacyLadder does not match the provided fixture")
 	}
 }
@@ -121,6 +126,7 @@ func GetLegacyRewards(t *testing.T) {
 		t.Fatal(err)
 	}
 	if !byteSlicesMatch(rewa_b, fixture) {
+		writeTestDebugOutput(rewa_b, fixture, "test_get_legacy_rewards")
 		t.Error("Fields for target struct LegacyRewards does not match the provided fixture")
 	}
 }

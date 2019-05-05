@@ -21,6 +21,7 @@ func TestGetLeagueData(t *testing.T) {
 		t.Fatal(err)
 	}
 	if !byteSlicesMatch(data_b, fixture) {
+		writeTestDebugOutput(data_b, fixture, "test_get_league_data")
 		t.Error("Fields for target struct LeagueData does not match the provided fixture")
 	}
 }

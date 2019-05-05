@@ -7,7 +7,7 @@ import (
 // Target struct for the LeagueData resource:
 // /data/sc2/league/:seasonId/:queueId/:teamId/:leagueId
 type LeagueData struct {
-	Links LeagueDataLinks  `json:"links"`
+	Links LeagueDataLinks  `json:"_links"`
 	Key   LeagueDataKey    `json:"key"`
 	Tier  []LeagueDataTier `json:"tier"`
 }

@@ -34,3 +34,17 @@ func getBodyFromFile(filename string) []byte {
 func byteSlicesMatch(a, b []byte) bool {
 	return bytes.Equal(a, b)
 }
+
+func writeTestDebugOutput(a, b []byte, testname string) {
+	out := "test_output/" + testname + "_output.json"
+	fix := "test_output/" + testname + "_fixture.json"
+	err := ioutil.WriteFile(out, a, 0644)
+	if err != nil {
+		panic(err)
+	}
+	err = ioutil.WriteFile(fix, b, 0644)
+	if err != nil {
+		panic(err)
+	}
+
+}

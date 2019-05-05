@@ -21,6 +21,7 @@ func TestGetStatic(t *testing.T) {
 		t.Fatal(err)
 	}
 	if !byteSlicesMatch(stat_b, fixture) {
+		writeTestDebugOutput(stat_b, fixture, "test_get_static")
 		t.Error("Fields for target struct LadderSummary does not match the provided fixture")
 	}
 }
@@ -41,6 +42,7 @@ func TestGetMetadata(t *testing.T) {
 		t.Fatal(err)
 	}
 	if !byteSlicesMatch(meta_b, fixture) {
+		writeTestDebugOutput(meta_b, fixture, "test_get_metadata")
 		t.Error("Fields for target struct LadderSummary does not match the provided fixture")
 	}
 }
@@ -61,6 +63,7 @@ func TestGetProfile(t *testing.T) {
 		t.Fatal(err)
 	}
 	if !byteSlicesMatch(prof_b, fixture) {
+		writeTestDebugOutput(prof_b, fixture, "test_get_profile")
 		t.Error("Fields for target struct LadderSummary does not match the provided fixture")
 	}
 }

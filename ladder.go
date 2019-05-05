@@ -9,7 +9,7 @@ import (
 type LadderSummary struct {
 	ShowCaseEntries      []LadderSummaryShowCaseEntry    `json:"showCaseEntries"`
 	PlacementMatches     []LadderSummaryPlacementMatches `json:"placementMatches"`
-	AllLadderMemberships []LadderSummaryAllMemberships   `json:"allLadderMemberships"`
+	AllLadderMemberships []LadderAllMembership           `json:"allLadderMemberships"`
 }
 
 type LadderSummaryShowCaseEntry struct {
@@ -24,11 +24,11 @@ type LadderSummaryShowCaseEntry struct {
 
 type LadderSummaryTeam struct {
 	LocalizedGameMode string                    `json:"localizedGameMode"`
-	Members           []LadderSummaryTeamMember `json:"memebrs"`
+	Members           []LadderSummaryTeamMember `json:"members"`
 }
 
 type LadderSummaryTeamMember struct {
-	FavoriteRace string `json:favoriteRace"`
+	FavoriteRace string `json:"favoriteRace"`
 	Name         string `json:"name"`
 	PlayerId     string `json:"playerId"`
 	Region       int    `json:"region"`
@@ -40,20 +40,25 @@ type LadderSummaryPlacementMatches struct {
 	GamesRemaining    int                       `json:"gamesRemaining"`
 }
 
-type LadderSummaryAllMemberships struct {
-	LadderId          string `json:"ladderId"`
-	LocalizedGameMode string `json:"localizedGameMode"`
-	Rank              int    `json:"rank"`
-}
-
 // Target struct for Ladder resource:
 // /sc2/profile/:regionId/:realmId/:profileId/ladder/:ladderId"
 type Ladder struct {
-	LadderTeams []LadderTeam `json:"ladderTeams"`
+	LadderTeams             []LadderTeam           `json:"ladderTeams"`
+	AllLadderMemberships    []LadderAllMembership  `json:"allLadderMemberships"`
+	LocalizedDivision       string                 `json:"localizedDivision"`
+	League                  string                 `json:"league"`
+	CurrentLadderMembership LadderLadderMembership `json:"currentLadderMembership"`
+	RanksAndPools           []LadderRankAndPool    `json:"ranksAndPools"`
 }
 
 type LadderTeam struct {
-	TeamMembers []LadderTeamMember `json:"teamMembers"`
+	TeamMembers   []LadderTeamMember `json:"teamMembers"`
+	PreviousRank  int                `json:"previousRank"`
+	Points        int                `json:"points"`
+	Wins          int                `json:"wins"`
+	Losses        int                `json:"losses"`
+	Mmr           int                `json:"mmr"`
+	JoinTimestamp int                `json:"joinTimestamp"`
 }
 
 type LadderTeamMember struct {
@@ -65,6 +70,17 @@ type LadderTeamMember struct {
 	FavoriteRace string `json:"favoriteRace"`
 }
 
+type LadderLadderMembership struct {
+	LadderId          string `json:"ladderId"`
+	LocalizedGameMode string `json:"localizedGameMode"`
+}
+
+type LadderRankAndPool struct {
+	Rank      int `json:"rank"`
+	Mmr       int `json:"mmr"`
+	BonusPool int `json:"bonusPool"`
+}
+
 // Target struct for Season resource:
 // /sc2/ladder/season/:regionId
 type Season struct {
@@ -73,6 +89,13 @@ type Season struct {
 	Year      int    `json:"year"`
 	StartDate string `json:"startDate"`
 	EndDate   string `json:"endDate"`
+}
+
+// Shared structs
+type LadderAllMembership struct {
+	LadderId          string `json:"ladderId"`
+	LocalizedGameMode string `json:"localizedGameMode"`
+	Rank              int    `json:"rank"`
 }
 
 func (c *Client) GetLadderSummary(region int, realm int, profile int) (*LadderSummary, error) {
