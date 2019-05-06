@@ -18,26 +18,26 @@ import (
 )
 
 func main() {
-	c := "YOUR-CLIENT-ID"
-	s := "YOUR-SECRET-ID"
-	client := NewClient("us", c, s)
+	c := "YOUR-BATTLENET-CLIENT"
+	s := "YOUR-BATTLENET-SECRET"
+	client := sc2.NewClient("us", c, s)
 
 	szn, err := client.GetSeason(1)
 	if err != nil {
-    	log.Fatal(err)
- 	}
- 	curr := szn.SeasonId // corresponding Blizzard JSON field is seasonId
+		log.Fatal(err)
+	}
+	curr := szn.SeasonId // corresponding Blizzard JSON field is seasonId
 	// seasonId, queueId = 201 for LotV, teamType = 0 for 1v1, leagueId = 6 for Grandmaster)
 	d, err := client.GetLeagueData(curr, 201, 0, 6)
 	if err != nil {
-    	log.Fatal(err)
+		log.Fatal(err)
 	}
-	id := d.Tier[0].Division.Id
+	id := d.Tier[0].Division[0].LadderId
 	grandmasters, err := client.GetLegacyLadder(1, id) // Currently the way to fetch ladder data without a unique player ID, may change soon
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(grandmasters.Team[0].Member[0].LegacyLink.Name) // Gets the first place Grandmaster!
+	fmt.Println(grandmasters.LadderMembers[0].Character.DisplayName) // Gets the first place Grandmaster!
 }
 
 ````
