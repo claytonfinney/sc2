@@ -77,7 +77,10 @@ type Profile struct {
 	Snapshot              ProfileSnapshot                `json:"snapshot"`
 	Career                ProfileCareer                  `json:"career"`
 	SwarmLevels           ProfileSwarmLevels             `json:"swarmLevels"`
+	Campaign              ProfileCampaign                `json:"campaign"`
 	CategoryPointProgress []ProfileCategoryPointProgress `json:"categoryPointProgress"`
+	AchievementShowcase   []string                       `json:"achievementShowcase"`
+	EarnedRewards         []ProfileEarnedReward          `json:"earnedRewards"`
 	EarnedAchievements    []ProfileEarnedAchievement     `json:"earnedAchievements"`
 }
 
@@ -85,16 +88,19 @@ type ProfileSummary struct {
 	Id                     string `json:"id"`
 	Realm                  int    `json:"realm"`
 	DisplayName            string `json:"displayName"`
+	ClanName               string `json:"clanName"`
+	ClanTag                string `json:"clanTag"`
 	Portrait               string `json:"portrait"`
 	DecalTerran            string `json:"decalTerran"`
 	DecalZerg              string `json:"decalZerg"`
-	DecalProtoss           string `json"decalProtoss"`
+	DecalProtoss           string `json:"decalProtoss"`
 	TotalSwarmLevel        int    `json:"totalSwarmLevel"`
 	TotalAchievementPoints int    `json:"totalAchievementPoints"`
 }
 
 type ProfileSnapshot struct {
-	SeasonSnapshot ProfileSeasonSnapshot `json:"seasonSnapshot"`
+	SeasonSnapshot               ProfileSeasonSnapshot `json:"seasonSnapshot"`
+	TotalRankedSeasonGamesPlayed int                   `json:"totalRankedSeasonGamesPlayed"`
 }
 
 type ProfileSeasonSnapshot struct {
@@ -102,6 +108,7 @@ type ProfileSeasonSnapshot struct {
 	Twos   ProfileSeasonSnapshotLadder `json:"2v2"`
 	Threes ProfileSeasonSnapshotLadder `json:"3v3"`
 	Fours  ProfileSeasonSnapshotLadder `json:"4v4"`
+	Archon ProfileSeasonSnapshotLadder `json:"Archon"`
 }
 
 type ProfileSeasonSnapshotLadder struct {
@@ -135,6 +142,16 @@ type ProfileSwarmLevels struct {
 	Protoss ProfileSwarmLevelRace `json:"protoss"`
 }
 
+type ProfileCampaign struct {
+	DifficultyCompleted ProfileCampaignDifficultyCompleted `json:"difficultyCompleted"`
+}
+
+type ProfileCampaignDifficultyCompleted struct {
+	WingsOfLiberty  string `json:"wings-of-liberty"`
+	HeartOfTheSwarm string `json:"heart-of-the-swarm"`
+	LegacyOfTheVoid string `json:"legacy-of-the-void"`
+}
+
 type ProfileSwarmLevelRace struct {
 	Level              int `json:"level"`
 	MaxLevelPoints     int `json:"maxLevelPoints"`
@@ -142,6 +159,12 @@ type ProfileSwarmLevelRace struct {
 }
 
 type ProfileCategoryPointProgress struct {
+	CategoryId   string `json:"categoryId"`
+	PointsEarned int    `json:"pointsEarned"`
+}
+
+type ProfileEarnedReward struct {
+	Category      string `json:"category"`
 	RewardId      string `json:"rewardId"`
 	AchievementId string `json:"achievementId"`
 	Selected      bool   `json:"selected"`
@@ -151,13 +174,20 @@ type ProfileEarnedAchievement struct {
 	AchievementId                    string                             `json:"achievementId"`
 	CompletionDate                   float64                            `json:"completionDate"`
 	NumCompletedAchievementsInSeries int                                `json:"numCompletedAchievementsInSeries"`
+	TotalAchievementsInSeries        int                                `json:"totalAchievementsInSeries"`
 	IsComplete                       bool                               `json:"isComplete"`
 	InProgress                       bool                               `json:"inProgress"`
 	Criteria                         []ProfileEarnedAchievementCriteria `json:"criteria"`
 }
 
 type ProfileEarnedAchievementCriteria struct {
-	CriterionId string `json:"criterionId"`
+	CriterionId string                                 `json:"criterionId"`
+	Earned      ProfileEarnedAchievementCriteriaEarned `json:"earned"`
+}
+
+type ProfileEarnedAchievementCriteriaEarned struct {
+	Quantity  int `json:"quantity"`
+	StartTime int `json:"startTime"`
 }
 
 func (c *Client) GetStatic(region int) (*Static, error) {

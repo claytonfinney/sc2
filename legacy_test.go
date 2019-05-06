@@ -33,7 +33,7 @@ func TestGetLegacyLadders(t *testing.T) {
 	defer server.Close()
 
 	// Ensure that all fields made it into the struct by checking equality
-	ladd, err := client.GetLegacyLadder(1, 123456)
+	ladd, err := client.GetLegacyLadders(1, 1, 123456)
 	if err != nil {
 		t.Fatal(err)
 	}

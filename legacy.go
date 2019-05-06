@@ -16,12 +16,10 @@ type LegacyProfile struct {
 	Portrait     LegacyIcon                `json:"portrait"`
 	Career       LegacyProfileCareer       `json:"career"`
 	SwarmLevels  LegacyProfileSwarmLevels  `json:"swarmLevels"`
+	Campaign     LegacyProfileCampaign     `json:"campaign"`
 	Season       LegacyProfileSeason       `json:"season"`
 	Rewards      LegacyProfileRewards      `json:"rewards"`
 	Achievements LegacyProfileAchievements `json:"achievements"`
-
-	Campaign struct {
-	} `json:"campaign"`
 }
 
 type LegacyProfileSeason struct {
@@ -30,6 +28,12 @@ type LegacyProfileSeason struct {
 	SeasonYear           int                  `json:"seasonYear"`
 	TotalGamesThisSeason int                  `json:"totalGamesThisSeason"`
 	Stats                []LegacyProfileStats `json:"stats"`
+}
+
+type LegacyProfileCampaign struct {
+	Wol  string `json:"wol"`
+	Hots string `json:"hots"`
+	Lotv string `json:"lotv"`
 }
 
 type LegacyProfileRewards struct {
@@ -71,12 +75,15 @@ type LegacyProfileSwarmLevels struct {
 }
 
 type LegacyProfileStats struct {
+	Type  string `json:"type"`
+	Wins  int    `json:"wins"`
+	Games int    `json:"games"`
 }
 
 type LegacyProfileRace struct {
-	Level              int `json:"level"`
-	MaxLevelPoints     int `json:"maxLevelPoints"`
-	CurrentLevelPoints int `json:"currentLevelPoints"`
+	Level          int `json:"level"`
+	TotalLevelXP   int `json:"totalLevelXP"`
+	CurrentLevelXP int `json:"currentLevelXP"`
 }
 
 // Target struct for Legacy Rewards resource:
@@ -126,13 +133,20 @@ type LegacyAchievementChild struct {
 // Target struct for Legacy Ladders resource:
 // /sc2/legacy/:regionId/:realmId/:profileId/ladders
 type LegacyLadders struct {
-	CurrentSeason  LegacySeason `json:"currentSeason"`
-	PreviousSeason LegacySeason `json:"previousSeason"`
+	CurrentSeason     []LegacySeason `json:"currentSeason"`
+	PreviousSeason    []LegacySeason `json:"previousSeason"`
+	ShowcasePlacement []LegacySeason `json:"showcasePlacement"`
 }
 
 type LegacySeason struct {
 	Ladder     []LegacySeasonLadder `json:"ladder"`
 	Characters []LegacyCharacter    `json:"characters"`
+	NonRanked  []LegacyNonRanked    `json:"nonRanked"`
+}
+
+type LegacyNonRanked struct {
+	Mmq         string `json:"mmq"`
+	GamesPlayed int    `json:"gamesPlayed"`
 }
 
 type LegacySeasonLadder struct {
