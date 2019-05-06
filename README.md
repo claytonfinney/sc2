@@ -14,12 +14,18 @@ go get github.com/claytonfinney/sc2
 #### Example Usage
 ````Go
 import (
-    "sc2"
+	"fmt"
+	"log"
+	"github.com/claytonfinney/sc2"
 )
 
 func main() {
-	c := "YOUR-BATTLENET-CLIENT"
-	s := "YOUR-BATTLENET-SECRET"
+	conf := &sc2.ClientConfig{
+		Region: "us",
+		Client: "YOUR-CLIENT-HERE",
+		Secret: "YOUR-SECRET-HERE",
+		Test: false, // Not a necessary parameter in normal use
+	}
 	client := sc2.NewClient("us", c, s)
 
 	szn, err := client.GetSeason(1)
