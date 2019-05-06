@@ -26,7 +26,7 @@ func main() {
 		Secret: "YOUR-SECRET-HERE",
 		Test: false, // Not a necessary parameter in normal use
 	}
-	client := sc2.NewClient("us", c, s)
+	client := sc2.NewClient(conf)
 
 	szn, err := client.GetSeason(1)
 	if err != nil {
