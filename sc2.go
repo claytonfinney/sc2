@@ -23,7 +23,7 @@ type Client struct {
 }
 
 type ClientConfig struct {
-	// 1=US, 2=EU, 3=KR/TW, 5=CN
+	// "us" || "eu" || "kr" || "tw" || "cn"
 	Region string
 	// A Blizzard API Client ID
 	Client string
