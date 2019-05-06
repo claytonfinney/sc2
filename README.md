@@ -53,29 +53,36 @@ func main() {
 For convenience:
 
 **ladder.go**
-`func (c *Client) GetLadderSummary(region int, realm int, profile int) (*LadderSummary, error)`
-`func (c *Client) GetLadder(region int, realm int, profile int, ladder int) (*Ladder, error)`
-`func (c *Client) GetGrandmaster(region int) (*Ladder, error)`
-`func (c *Client) GetSeason(region int) (*Season, error)`
-
+````go
+func (c *Client) GetLadderSummary(region int, realm int, profile int) (*LadderSummary, error)
+func (c *Client) GetLadder(region int, realm int, profile int, ladder int) (*Ladder, error)
+func (c *Client) GetGrandmaster(region int) (*Ladder, error)
+func (c *Client) GetSeason(region int) (*Season, error)
+````
 **league.go**
-`func (c *Client) GetLeagueData(season int, queue int, team int, league int) (*LeagueData, error)`
+````go
+func (c *Client) GetLeagueData(season int, queue int, team int, league int) (*LeagueData, error)
+````
 
 **player.go**
 Endpoint currently returns `[]`.
 
 **legacy.go**
-`func (c *Client) GetLegacyProfile(region int, realm int, profile int) (*LegacyProfile, error)`
-`func (c *Client) GetLegacyLadders(region int, realm int, profile int) (*LegacyLadders, error)`
-`func (c *Client) GetLegacyMatches(region int, realm int, profile int) (*LegacyMatches, error)`
-`func (c *Client) GetLegacyAchievements(region int) (*LegacyAchievements, error)`
-`func (c *Client) GetLegacyLadder(region int, id int) (*LegacyLadder, error)`
-`func (c *Client) GetLegacyRewards(region int) (*LegacyRewards, error)`
+````go
+func (c *Client) GetLegacyProfile(region int, realm int, profile int) (*LegacyProfile, error)
+func (c *Client) GetLegacyLadders(region int, realm int, profile int) (*LegacyLadders, error)
+func (c *Client) GetLegacyMatches(region int, realm int, profile int) (*LegacyMatches, error)
+func (c *Client) GetLegacyAchievements(region int) (*LegacyAchievements, error)
+func (c *Client) GetLegacyLadder(region int, id int) (*LegacyLadder, error)
+func (c *Client) GetLegacyRewards(region int) (*LegacyRewards, error)
+````
 
 **static.go**
-`func (c *Client) GetStatic(region int) (*Static, error)`
-`func (c *Client) GetMetadata(region int, realm int, profile int) (*Metadata, error)`
-`func (c *Client) GetProfile(region int, realm int, profile int) (*Profile, error)`
+````go
+func (c *Client) GetStatic(region int) (*Static, error)
+func (c *Client) GetMetadata(region int, realm int, profile int) (*Metadata, error)
+func (c *Client) GetProfile(region int, realm int, profile int) (*Profile, error)
+````
 
 #### Things I'm planning to add
 Right now the actual client is pretty bare-bones, so some things I'd like to add are:
