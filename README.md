@@ -2,7 +2,7 @@
 
 This package is intended for developers wanting to create applications using Blizzard's StarCraft II web API. All currently available endpoints are listed on the [Blizzard Developer Documentation](https://develop.battle.net/documentation/api-reference/starcraft-2-community-api).
 
-When the JSON payload from the API is unmarshalled into its corresponding struct, you can generally expect that each key has been mapped to a struct field with the same name, but the first letter capitalized. For example, instead of accesscessing a key, for example in Javascript, with `ladderTeams[0].teamMembers[0].displayName`, the name scheme for the Golang struct is `LadderTeams[0].TeamMembers[0].DisplayName`. There are some cases, like the legacy endpoints, where their JSON keys are snake\_case. These have been converted to the CamelCase format in their corresponding Go struct.
+When the JSON payload from the API is unmarshalled into its corresponding struct, you can generally expect that each key has been mapped to a struct field with the same name, but the first letter capitalized. Instead of accesscessing a key, for example in Javascript, with `ladderTeams[0].teamMembers[0].displayName`, the name scheme for the Golang struct is `LadderTeams[0].TeamMembers[0].DisplayName`. There are some cases, like the legacy endpoints, where their JSON keys are snake\_case. These have been converted to the CamelCase format in their corresponding Go struct.
 
 All functions in this package that call Blizzard APIs follow the convention of \<Method\>\<EndpointName\>. The only exception to this convention is that there is an endpoint named `getLeagueData`, which does not have a corresponding function called `GetgetLeagueData`, just `GetLeagueData`.
 
