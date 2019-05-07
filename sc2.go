@@ -79,7 +79,7 @@ func NewClient(c *ClientConfig) *Client {
 		return &Client{BaseUrl: base, Token: "test_token"}
 	}
 
-	// Else, we need to get an auth token from the API and buld a full client
+	// Else, we need to get an auth token from the API and build a full client
 	token := getAuthToken(c)
 	base := fmt.Sprintf("https://%s.api.blizzard.com", c.Region)
 	return &Client{BaseUrl: base, Client: c.Client, Secret: c.Secret, Token: token}
@@ -104,9 +104,4 @@ func (c *Client) Get(uri string, payload interface{}) error {
 		return err
 	}
 	return nil
-}
-
-func main() {
-	c := &ClientConfig{Region: "us", Test: true}
-	fmt.Println(c)
 }
